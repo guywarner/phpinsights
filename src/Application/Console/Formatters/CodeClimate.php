@@ -34,24 +34,9 @@ final class CodeClimate implements Formatter
      */
     public function format(InsightCollection $insightCollection, array $metrics): void
     {
-        $results = $insightCollection->results();
+        $data = $this->issues($insightCollection, $metrics);
 
-        $data = [
-            'summary' => [
-                'code' => $results->getCodeQuality(),
-                'complexity' => $results->getComplexity(),
-                'architecture' => $results->getStructure(),
-                'style' => $results->getStyle(),
-                'security issues' => $results->getTotalSecurityIssues(),
-                'fixed issues' => $results->getTotalFix(),
-            ],
-        ];
-
-        $data += $this->issues($insightCollection, $metrics);
-
-        $json = json_encode($data, JSON_THROW_ON_ERROR);
-
-        $this->output->write($json);
+        $this->output->write(json_encode($data));
     }
 
     /**
@@ -118,8 +103,6 @@ final class CodeClimate implements Formatter
                     ];
                 }
             }
-
-            dd($data);
         }
 
         return $data;
