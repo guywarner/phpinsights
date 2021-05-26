@@ -82,7 +82,7 @@ final class CodeClimate implements Formatter
                 /** @var Details $detail */
                 foreach ($details as $detail) {
                     $data[] = [
-                        'checkname' => $insight->getInsightClass(),
+                        //'checkname' => $insight->getInsightClass(),
                         'description' => $detail->hasMessage() ? $detail->getMessage() : null,
                         'fingerprint' => md5(
                             implode(
@@ -93,13 +93,14 @@ final class CodeClimate implements Formatter
                                 ]
                             )
                         ),
+                        'severity' => 'major',
                         'location' => [
                             'path' => PathShortener::fileName($detail, $insightCollection->getCollector()->getCommonPath()),
                             'lines' => [
                                 'begin' => $detail->hasLine() ? $detail->getLine() : null,
                             ],
                         ],
-                        'category' => $climateCategories[$category]
+                        //'category' => $climateCategories[$category]
                     ];
                 }
             }
